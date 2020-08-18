@@ -1,0 +1,17 @@
+{
+  "board1": {
+    "name": "Games",
+    "description": "My favorite games",
+    "uid": "xSSuIeZNwVS4lZb6dIgw6Vjg0Pn1"
+  },
+  "board2": {
+    "name": "Movies/TV",
+    "description": "My favorite movies/shows",
+    "uid": "xSSuIeZNwVS4lZb6dIgw6Vjg0Pn1"
+  },
+  "board3": {
+    "name": "Music",
+    "description": "My favorite music",
+    "uid": "xSSuIeZNwVS4lZb6dIgw6Vjg0Pn1"
+  }
+}
