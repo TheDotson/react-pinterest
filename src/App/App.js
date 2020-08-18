@@ -2,7 +2,6 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import fbConnection from '../helpers/data/connection';
-import Auth from '../components/Auth/Auth';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
 import BoardContainer from '../components/BoardContainer/BoardContiner';
 import './App.scss';
@@ -36,13 +35,12 @@ class App extends React.Component {
         return <BoardContainer />;
       }
 
-      return <Auth />;
+      return null;
     };
 
     return (
       <div className="App">
-        <h1>React-Pinterest</h1>
-        <MyNavbar />
+        <MyNavbar authed={this.state.authed}/>
         {loadComponent()}
       </div>
     );
