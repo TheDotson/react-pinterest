@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import fbConnection from '../helpers/data/connection';
 import MyNavbar from '../components/MyNavbar/MyNavbar';
-import BoardContainer from '../components/BoardContainer/BoardContiner';
+import BoardContainer from '../components/BoardContainer/BoardContainer';
 import './App.scss';
 
 fbConnection();
@@ -35,7 +35,7 @@ class App extends React.Component {
         return <BoardContainer />;
       }
 
-      return null;
+      return '';
     };
 
     return (
