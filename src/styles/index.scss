@@ -3,5 +3,16 @@
 @import 'variables';
 
 body {
-  background-color: $favColor;
+  background-color: whitesmoke;
+}
+
+.board-card {
+  background-color: rgb(222, 236, 248);
+  border: solid 2px gray;
+}
+
+.pins {
+  margin-top: 10px;
+  border: 0px;
+  border-radius: 5px;
 }

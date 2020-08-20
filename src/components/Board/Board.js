@@ -18,7 +18,7 @@ class Board extends React.Component {
     const { board } = this.props;
 
     return (
-      <div className="card text-center">
+      <div className="card text-center board-card">
         <div className="card-header"><h5>{board.name}</h5></div>
         <div className="card-body">
           <p className="card-title">{board.description}</p>
