@@ -14,6 +14,12 @@ class Board extends React.Component {
     setSingleBoard(board.id);
   }
 
+  deleteBoardEvent = (e) => {
+    const { board, deleteBoard } = this.props;
+    e.preventDefault();
+    deleteBoard(board.id);
+  }
+
   render() {
     const { board } = this.props;
 
@@ -23,6 +29,7 @@ class Board extends React.Component {
         <div className="card-body">
           <p className="card-title">{board.description}</p>
           <button className="btn btn-secondary" onClick={this.singleBoardEvent}>View Board Details</button>
+          <button className="btn btn-danger" onClick={this.deleteBoardEvent}>Delete Board</button>
         </div>
         <div className="card-footer text-muted">2 days ago</div>
       </div>
