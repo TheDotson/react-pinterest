@@ -34,6 +34,15 @@ class BoardContainer extends React.Component {
       .catch((err) => console.error(err));
   }
 
+  createBoard = (newBoard) => {
+    boardsData.createBoard(newBoard)
+      .then(() => {
+        this.goGetBoards();
+        this.setState({ formOpen: false });
+      })
+      .catch((err) => console.error('Create board failed', err));
+  }
+
   render() {
     const { boards, formOpen } = this.state;
     const { setSingleBoard } = this.props;
@@ -41,8 +50,8 @@ class BoardContainer extends React.Component {
 
     return (
       <div>
-        <button className="btn btn-warning" onClick={() => { this.setState({ formOpen: true }); }}>Button</button>
-        { formOpen ? <BoardForm /> : '' }
+        <button className="btn btn-warning" onClick={() => { this.setState({ formOpen: !formOpen }); }}><i className="far fa-plus-square"></i></button>
+        { formOpen ? <BoardForm createBoard={this.createBoard}/> : '' }
         <h1>My Boards</h1>
         <div className="card-columns">
           {boardCard}
