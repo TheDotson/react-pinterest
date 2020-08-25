@@ -4,6 +4,7 @@ import authData from '../../helpers/data/authData';
 import boardsData from '../../helpers/data/boardsData';
 import smash from '../../helpers/data/smash';
 import Board from '../Board/Board';
+import BoardForm from '../BoardForm/BoardForm';
 
 class BoardContainer extends React.Component {
   static propTypes = {
@@ -12,13 +13,13 @@ class BoardContainer extends React.Component {
 
   state = {
     boards: [],
+    formOpen: false,
   }
 
   goGetBoards = () => {
     boardsData.getBoardsByUid(authData.getUid())
       .then((boards) => this.setState({ boards }))
       .catch((err) => console.error('get boards broke!!', err));
-
   }
 
   componentDidMount() {
@@ -33,13 +34,24 @@ class BoardContainer extends React.Component {
       .catch((err) => console.error(err));
   }
 
+  createBoard = (newBoard) => {
+    boardsData.createBoard(newBoard)
+      .then(() => {
+        this.goGetBoards();
+        this.setState({ formOpen: false });
+      })
+      .catch((err) => console.error('Create board failed', err));
+  }
+
   render() {
-    const { boards } = this.state;
+    const { boards, formOpen } = this.state;
     const { setSingleBoard } = this.props;
     const boardCard = boards.map((board) => <Board key={board.id} board={board} setSingleBoard={setSingleBoard} deleteBoard={this.deleteBoard}/>);
 
     return (
       <div>
+        <button className="btn btn-warning" onClick={() => { this.setState({ formOpen: !formOpen }); }}><i className="far fa-plus-square"></i></button>
+        { formOpen ? <BoardForm createBoard={this.createBoard}/> : '' }
         <h1>My Boards</h1>
         <div className="card-columns">
           {boardCard}
