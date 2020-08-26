@@ -5,11 +5,25 @@ import authData from '../../helpers/data/authData';
 class BoardForm extends React.Component {
   static propTypes = {
     createBoard: PropTypes.func.isRequired,
+    updateBoard: PropTypes.func.isRequired,
+    boardThatIAmEditing: PropTypes.object.isRequired,
   }
 
   state = {
     name: '',
     description: '',
+    isEditing: false,
+  }
+
+  componentDidMount() {
+    const { boardThatIAmEditing } = this.props;
+    if (boardThatIAmEditing.name) {
+      this.setState({
+        name: boardThatIAmEditing.name,
+        description: boardThatIAmEditing.description,
+        isEditing: true,
+      });
+    }
   }
 
   changeNameEvent = (e) => {
@@ -35,7 +49,26 @@ class BoardForm extends React.Component {
     createBoard(newBoard);
   }
 
+  editBoardEvent = (e) => {
+    e.preventDefault();
+    const { name, description } = this.state;
+    const { updateBoard, boardThatIAmEditing } = this.props;
+
+    const myBoardWithChanges = {
+      name,
+      description,
+      uid: authData.getUid(),
+    };
+    updateBoard(boardThatIAmEditing.id, myBoardWithChanges);
+  }
+
   render() {
+    const {
+      description,
+      name,
+      isEditing,
+    } = this.state;
+
     return (
       <form className="col-6 offset-3">
         <div className="form-group">
@@ -45,6 +78,7 @@ class BoardForm extends React.Component {
             className="form-control"
             id="boardName"
             placeholder="Enter Board Name"
+            value={name}
             onChange={this.changeNameEvent}
           />
         </div>
@@ -55,10 +89,16 @@ class BoardForm extends React.Component {
             className="form-control"
             id="boardDescription"
             placeholder="What's this board about?"
+            value={description}
             onChange={this.changeDescriptionEvent}
           />
         </div>
-        <button className="btn btn-dark" onClick={this.saveBoardEvent}>Save Board</button>
+        {
+          isEditing
+            ? <button className="btn btn-dark" onClick={this.editBoardEvent}>Edit Board</button>
+            : <button className="btn btn-dark" onClick={this.saveBoardEvent}>Save Board</button>
+
+        }
       </form>
     );
   }
