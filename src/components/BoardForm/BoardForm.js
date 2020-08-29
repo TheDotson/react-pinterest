@@ -7,6 +7,7 @@ class BoardForm extends React.Component {
     createBoard: PropTypes.func.isRequired,
     updateBoard: PropTypes.func.isRequired,
     boardThatIAmEditing: PropTypes.object.isRequired,
+    closeForm: PropTypes.func.isRequired,
   }
 
   state = {
@@ -22,6 +23,19 @@ class BoardForm extends React.Component {
         name: boardThatIAmEditing.name,
         description: boardThatIAmEditing.description,
         isEditing: true,
+      });
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const prevBoard = prevProps.boardThatIAmEditing;
+    const incomingBoard = this.props.boardThatIAmEditing;
+    if (prevBoard.name !== incomingBoard.name) {
+      this.setState({
+        description: incomingBoard.description || '',
+        name: incomingBoard.name || '',
+        // eslint-disable-next-line no-unneeded-ternary
+        isEditing: incomingBoard.name ? true : false,
       });
     }
   }
@@ -62,6 +76,11 @@ class BoardForm extends React.Component {
     updateBoard(boardThatIAmEditing.id, myBoardWithChanges);
   }
 
+  closeFormEvent = (e) => {
+    e.preventDefault();
+    this.props.closeForm();
+  }
+
   render() {
     const {
       description,
@@ -71,6 +90,7 @@ class BoardForm extends React.Component {
 
     return (
       <form className="col-6 offset-3">
+        <button className="btn btn-danger" onClick={this.closeFormEvent}>CLOSE FORM</button>
         <div className="form-group">
           <label htmlFor="boardName">Board Name</label>
           <input
@@ -97,7 +117,6 @@ class BoardForm extends React.Component {
           isEditing
             ? <button className="btn btn-dark" onClick={this.editBoardEvent}>Edit Board</button>
             : <button className="btn btn-dark" onClick={this.saveBoardEvent}>Save Board</button>
-
         }
       </form>
     );
